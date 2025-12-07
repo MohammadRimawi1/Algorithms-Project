@@ -26,11 +26,11 @@ public class Project {
     public static void heapSort(int[] arr) {
         int n = arr.length;
 
-        // Build max heap
+      
         for (int i = n / 2 - 1; i >= 0; i--)
             heapify(arr, n, i);
 
-        // Extract elements
+      
         for (int i = n - 1; i > 0; i--) {
             int temp = arr[0];
             arr[0] = arr[i];
