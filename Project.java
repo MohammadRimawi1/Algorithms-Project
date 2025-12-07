@@ -26,11 +26,11 @@ public class Project {
     public static void heapSort(int[] arr) {
         int n = arr.length;
 
-      
+        // Build max heap
         for (int i = n / 2 - 1; i >= 0; i--)
             heapify(arr, n, i);
 
-      
+        // Extract elements
         for (int i = n - 1; i > 0; i--) {
             int temp = arr[0];
             arr[0] = arr[i];
@@ -60,7 +60,6 @@ public class Project {
         }
     }
 
-  
     public static void randomizedQuickSort(int[] arr) {
         randomizedQuickSort(arr, 0, arr.length - 1);
     }
@@ -74,36 +73,36 @@ public class Project {
         }
     }
 
-private static int randomizedPartition(int[] arr, int low, int high) {
+    private static int randomizedPartition(int[] arr, int low, int high) {
 
-    int randomIndex = low + (int)(Math.random() * (high - low + 1));
+        int randomIndex = low + (int) (Math.random() * (high - low + 1));
 
+        int temp = arr[randomIndex];
+        arr[randomIndex] = arr[high];
+        arr[high] = temp;
 
-    int temp = arr[randomIndex];
-    arr[randomIndex] = arr[high];
-    arr[high] = temp;
+        return partition(arr, low, high);
 
-  
-    return partition(arr, low, high);
-
-    
-}
-private static int partition(int[] arr, int low, int high) {
-    int pivot = arr[high];
-    int i = low - 1;
-
-    for (int j = low; j < high; j++) {
-        if (arr[j] < pivot) {
-            i++;
-            int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;
-        }
     }
 
-    int temp = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = temp;
+    private static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = low - 1;
 
-    return i + 1;
-}
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        return i + 1;
+    }
 
 }
