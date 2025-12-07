@@ -1,20 +1,6 @@
 public class Project {
     public static void main(String[] args) {
-        int[] array = { 4, 1, 6, 9, 2, 3, 7, 8, 5 };
-
-        insertionSort(array);
-
-        for (int i : array) {
-            System.out.print(i + " ");
-        }
-        // ==== INSERTION SORT ====
-
-        // MERGE SORT
-        mergeSort(array);
-        System.out.println("\nMerge Sort: ");
-        for (int i : array) {
-            System.out.print(i + " ");
-        }
+        // GENERATE DATA
     }
 
     static void insertionSort(int[] array) {
@@ -82,8 +68,34 @@ public class Project {
             r++;
         }
     }
-}
 
+    static void quickSort(int[] array, int start, int end) {
+        if (end <= start)
+            return;
+
+        int pivot = normalPartition(array, start, end);
+        quickSort(array, start, pivot - 1);
+        quickSort(array, pivot + 1, end);
+    }
+
+    static int normalPartition(int[] array, int start, int end) {
+        int pivot = array[end];
+        int i = start - 1;
+
+        for (int j = start; j <= end - 1; j++) {
+            if (array[j] < pivot) {
+                i++;
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+        i++;
+        int temp = array[i];
+        array[i] = array[end];
+        array[end] = temp;
+        return i;
+    }
 
     public static void heapSort(int[] arr) {
         int n = arr.length;
@@ -122,7 +134,6 @@ public class Project {
         }
     }
 
-  
     public static void randomizedQuickSort(int[] arr) {
         randomizedQuickSort(arr, 0, arr.length - 1);
     }
@@ -136,37 +147,36 @@ public class Project {
         }
     }
 
-private static int randomizedPartition(int[] arr, int low, int high) {
+    private static int randomizedPartition(int[] arr, int low, int high) {
 
-    int randomIndex = low + (int)(Math.random() * (high - low + 1));
+        int randomIndex = low + (int) (Math.random() * (high - low + 1));
 
+        int temp = arr[randomIndex];
+        arr[randomIndex] = arr[high];
+        arr[high] = temp;
 
-    int temp = arr[randomIndex];
-    arr[randomIndex] = arr[high];
-    arr[high] = temp;
+        return partition(arr, low, high);
 
-  
-    return partition(arr, low, high);
-
-    
-}
-private static int partition(int[] arr, int low, int high) {
-    int pivot = arr[high];
-    int i = low - 1;
-
-    for (int j = low; j < high; j++) {
-        if (arr[j] < pivot) {
-            i++;
-            int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;
-        }
     }
 
-    int temp = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = temp;
+    private static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = low - 1;
 
-    return i + 1;
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        return i + 1;
+    }
+
 }
-
-}
-
