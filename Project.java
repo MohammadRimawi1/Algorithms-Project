@@ -42,9 +42,8 @@ public class Project {
         int[] a1 = original.clone();
         int[] a2 = original.clone();
         int[] a3 = original.clone();
-        // int[] a4 = original.clone();
-        // int[] a5 = original.clone();
-
+        int[] a4 = original.clone();
+        
         System.out.printf("%-25s %-15s%n", "Algorithm", "Time (s)");
         System.out.println("-------------------------------------------");
 
@@ -66,19 +65,12 @@ public class Project {
         end = System.nanoTime();
         System.out.printf("%-25s %.6f%n", "Heap Sort", (end - start) / (double) BILLION);
 
-        // // QuickSort
-        // start = System.nanoTime();
-        // quickSort(a4, 0, a4.length - 1);
-        // end = System.nanoTime();
-        // System.out.printf("%-25s %.6f%n", "QuickSort", (end - start) / (double)
-        // BILLION);
+        // QuickSort
+        start = System.nanoTime();
+        quickSort(a4, 0, a4.length - 1);
+        end = System.nanoTime();
+        System.out.printf("%-25s %.6f%n", "QuickSort", (end - start) / (double) BILLION);
 
-        // // RandomizedQuickSort
-        // start = System.nanoTime();
-        // randomizedQuickSort(a5);
-        // end = System.nanoTime();
-        // System.out.printf("%-25s %.6f%n", "Randomized QuickSort", (end - start) /
-        // (double) BILLION);
     }
     // ====== BENCHMARKING ======
 
@@ -204,44 +196,55 @@ public class Project {
     // ==== Merge Sort ====
 
     // QuickSort
-    // static void quickSort(int[] array, int start, int end) {
-    // if (end <= start)
-    // return;
+    static void quickSort(int[] array, int start, int end) {
+        if (start >= end)
+            return;
+        boolean allEqual = true;
+        for (int i = start + 1; i <= end; i++) {
+            if (array[i] != array[start]) {
+                allEqual = false;
+                break;
+            }
+        }
+        if (allEqual)
+            return;
+        int pivot = normalPartition(array, start, end);
+        quickSort(array, start, pivot - 1);
+        quickSort(array, pivot + 1, end);
+    }
 
-    // int pivot = normalPartition(array, start, end);
-    // quickSort(array, start, pivot - 1);
-    // quickSort(array, pivot + 1, end);
-    // }
-
-    // static int normalPartition(int[] array, int start, int end) {
-    // int pivot = array[end];
-    // int i = start - 1;
-
-    // for (int j = start; j <= end - 1; j++) {
-    // if (array[j] < pivot) {
-    // i++;
-    // int temp = array[i];
-    // array[i] = array[j];
-    // array[j] = temp;
-    // }
-    // }
-    // i++;
-    // int temp = array[i];
-    // array[i] = array[end];
-    // array[end] = temp;
-    // return i;
-    // }
+    static int normalPartition(int[] array, int start, int end) {
+  
+        int randomPivot = start + (int) (Math.random() * (end - start + 1));
+        int tempPivot = array[randomPivot];
+        array[randomPivot] = array[end];
+        array[end] = tempPivot;
+        int pivot = array[end];
+        int i = start - 1;
+        for (int j = start; j < end; j++) {
+            if (array[j] <= pivot) {
+                i++;
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+        int temp = array[i + 1];
+        array[i + 1] = array[end];
+        array[end] = temp;
+        return i + 1;
+    }
     // ==== QuickSort ====
 
     // Heap Sort
     public static void heapSort(int[] arr) {
         int n = arr.length;
 
-        // Build max heap
+  
         for (int i = n / 2 - 1; i >= 0; i--)
             heapify(arr, n, i);
 
-        // Extract elements
+      
         for (int i = n - 1; i > 0; i--) {
             int temp = arr[0];
             arr[0] = arr[i];
@@ -272,51 +275,5 @@ public class Project {
     }
     // ==== Heap Sort ====
 
-    // RandomizedQuickSort
-    // public static void randomizedQuickSort(int[] arr) {
-    // randomizedQuickSort(arr, 0, arr.length - 1);
-    // }
-
-    // private static void randomizedQuickSort(int[] arr, int low, int high) {
-    // if (low < high) {
-    // int pivotIndex = randomizedPartition(arr, low, high);
-
-    // randomizedQuickSort(arr, low, pivotIndex - 1);
-    // randomizedQuickSort(arr, pivotIndex + 1, high);
-    // }
-    // }
-
-    // private static int randomizedPartition(int[] arr, int low, int high) {
-
-    // int randomIndex = low + (int) (Math.random() * (high - low + 1));
-
-    // int temp = arr[randomIndex];
-    // arr[randomIndex] = arr[high];
-    // arr[high] = temp;
-
-    // return partition(arr, low, high);
-
-    // }
-
-    // private static int partition(int[] arr, int low, int high) {
-    // int pivot = arr[high];
-    // int i = low - 1;
-
-    // for (int j = low; j < high; j++) {
-    // if (arr[j] < pivot) {
-    // i++;
-    // int temp = arr[i];
-    // arr[i] = arr[j];
-    // arr[j] = temp;
-    // }
-    // }
-
-    // int temp = arr[i + 1];
-    // arr[i + 1] = arr[high];
-    // arr[high] = temp;
-
-    // return i + 1;
-    // }
-    // ==== RandomizedQuickSort ====
     // ====== SORTING ALGORITHMS ======
 }
